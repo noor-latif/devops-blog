@@ -2,7 +2,7 @@
 layout: page
 title: About
 menu: true
-order: 2
+order: 1
 ---
 
 # About Me
