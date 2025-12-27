@@ -24,3 +24,23 @@
 - **SCSS**: Compressed output; follow Jekyll Sass structure
 - **Naming**: camelCase for JS variables, kebab-case for CSS classes
 - **Licenses**: GPL-3.0; include copyright headers in source files
+
+## Agent Guidelines
+- Do NOT create summary .md files at the end of successful task completion. Keep the repository clean; documentation goes in `/docs/` if needed.
+
+## Visual Verification Workflow
+After making changes to CSS, layouts, or components, verify they were applied correctly using screenshots:
+
+1. **Take a screenshot**:
+   ```bash
+   node screenshot.js http://localhost:4000 [filename].png
+   node screenshot.js http://localhost:4000/blog/ blog.png
+   ```
+
+2. **Analyze the screenshot**: Read the image from `/screenshots/[filename].png` and verify:
+   - Layout changes are visible
+   - CSS modifications are applied
+   - Components render correctly
+   - No visual regressions
+
+3. **Report findings**: Describe what you see in the screenshot and confirm whether the changes match the intended behavior. If issues exist, diagnose and fix them.

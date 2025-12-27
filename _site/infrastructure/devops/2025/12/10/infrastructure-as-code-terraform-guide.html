@@ -30,10 +30,10 @@ Powered by Hydejack v9.2.1 <https://hydejack.com/>
   
     
 
-<title>Welcome to DevOps Blog | Noor Latif | DevOps Engineer</title>
-<meta name="description" content="Welcome to the DevOps Blog! This is your first post.
+<title>Infrastructure as Code With Terraform | Noor Latif | DevOps Engineer</title>
+<meta name="description" content="Infrastructure as Code is the difference between “I built a thing” and “I can reliably rebuild that thing 100 times.”
 ">
-<link rel="canonical" href="http://localhost:4000/2025/12/27/welcome.html">
+<link rel="canonical" href="http://localhost:4000/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html">
 
   
 
@@ -63,7 +63,7 @@ Powered by Hydejack v9.2.1 <https://hydejack.com/>
 <meta name="generator" content="Hydejack v9.2.1" />
 
 
-<link rel="alternate" href="http://localhost:4000/2025/12/27/welcome.html" hreflang="en">
+<link rel="alternate" href="http://localhost:4000/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html" hreflang="en">
 
 
 
@@ -181,7 +181,7 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
           <span>/</span>
           
           
-          <a href="/2025/">2025</a>
+          <a href="/infrastructure/">infrastructure</a>
         
       </li>
     
@@ -190,7 +190,7 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
           <span>/</span>
           
           
-          <a href="/2025/12/">12</a>
+          <a href="/infrastructure/devops/">devops</a>
         
       </li>
     
@@ -199,14 +199,32 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
           <span>/</span>
           
           
-          <a href="/2025/12/27/">27</a>
+          <a href="/infrastructure/devops/2025/">2025</a>
         
       </li>
     
       <li>
         
           <span>/</span>
-          <span>welcome.html</span>
+          
+          
+          <a href="/infrastructure/devops/2025/12/">12</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          
+          
+          <a href="/infrastructure/devops/2025/12/10/">10</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          <span>infrastructure-as-code-terraform-guide.html</span>
         
       </li>
     
@@ -223,18 +241,18 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
 
 
 
-<article id="post-2025-12-27-welcome" class="page post mb6" role="article">
+<article id="post-infrastructure-devops-2025-12-10-infrastructure-as-code-terraform-guide" class="page post mb6" role="article">
   <header>
     <h1 class="post-title flip-project-title">
       
-        Welcome to DevOps Blog
+        Infrastructure as Code With Terraform
       
     </h1>
 
     <div class="post-date">
       
       <span class="ellipsis mr1">
-        <time datetime="2025-12-27T00:00:00+01:00">27 Dec 2025</time>  
+        <time datetime="2025-12-10T00:00:00+01:00">10 Dec 2025</time> in <span>Infrastructure</span> / <span>Devops</span> on <span>Terraform</span>, <span>Iac</span>, <span>Automation</span>
       </span>
       
         
@@ -254,9 +272,138 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
   </header>
 
   
-    <p>Welcome to the DevOps Blog! This is your first post.</p>
+    <p>Infrastructure as Code is the difference between “I built a thing” and “I can reliably rebuild that thing 100 times.”</p>
 
-<p>You can start writing about your DevOps journey here.</p>
+<p>The first time I wrote infrastructure in Terraform, I felt like I’d been doing things wrong forever. Here’s why it matters and how to think about it correctly.</p>
+
+<h2 id="the-old-way-manual-infrastructure">The Old Way (Manual Infrastructure)</h2>
+
+<p>Click through AWS console. Create VPC. Create subnets. Create security groups. Document it in a spreadsheet nobody updates. When you need to recreate it, you forget something. It breaks.</p>
+
+<h2 id="the-new-way-infrastructure-as-code">The New Way (Infrastructure as Code)</h2>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_vpc"</span> <span class="s2">"main"</span> <span class="p">{</span>
+  <span class="nx">cidr_block</span> <span class="o">=</span> <span class="s2">"10.0.0.0/16"</span>
+  
+  <span class="nx">tags</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">Name</span> <span class="o">=</span> <span class="s2">"main-vpc"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">resource</span> <span class="s2">"aws_subnet"</span> <span class="s2">"private"</span> <span class="p">{</span>
+  <span class="nx">vpc_id</span>            <span class="o">=</span> <span class="nx">aws_vpc</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nx">id</span>
+  <span class="nx">cidr_block</span>        <span class="o">=</span> <span class="s2">"10.0.1.0/24"</span>
+  <span class="nx">availability_zone</span> <span class="o">=</span> <span class="s2">"us-east-1a"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Your infrastructure is now:</p>
+<ul>
+  <li><strong>Version controlled</strong> (git history shows every change)</li>
+  <li><strong>Reviewable</strong> (code reviews catch mistakes)</li>
+  <li><strong>Reproducible</strong> (apply the same config, get the same result)</li>
+  <li><strong>Testable</strong> (validate it before applying)</li>
+</ul>
+
+<h2 id="core-concepts">Core Concepts</h2>
+
+<p><strong>State:</strong> Terraform maintains a file that tracks “what resources exist right now.” When you apply changes, it compares desired state (your code) to actual state (real infrastructure) and makes the difference.</p>
+
+<p><strong>Resources:</strong> The things you create—VPCs, instances, databases, etc.</p>
+
+<p><strong>Variables:</strong> Inputs to your code. Instead of hardcoding values, parameterize them.</p>
+
+<p><strong>Outputs:</strong> What you want to know about what you created (instance IPs, database endpoints, etc.).</p>
+
+<p><strong>Modules:</strong> Reusable packages of infrastructure. Write once, use 100 times.</p>
+
+<h2 id="a-real-example">A Real Example</h2>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span> <span class="s2">"environment"</span> <span class="p">{</span>
+  <span class="nx">type</span> <span class="o">=</span> <span class="nx">string</span>
+<span class="p">}</span>
+
+<span class="nx">variable</span> <span class="s2">"instance_count"</span> <span class="p">{</span>
+  <span class="nx">type</span> <span class="o">=</span> <span class="nx">number</span>
+  <span class="nx">default</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">}</span>
+
+<span class="nx">resource</span> <span class="s2">"aws_instance"</span> <span class="s2">"web"</span> <span class="p">{</span>
+  <span class="nx">count</span>         <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">instance_count</span>
+  <span class="nx">ami</span>           <span class="o">=</span> <span class="s2">"ami-0c55b159cbfafe1f0"</span>
+  <span class="nx">instance_type</span> <span class="o">=</span> <span class="s2">"t2.micro"</span>
+  
+  <span class="nx">tags</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">Name</span> <span class="o">=</span> <span class="s2">"${var.environment}-web-${count.index}"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">output</span> <span class="s2">"instance_ips"</span> <span class="p">{</span>
+  <span class="nx">value</span> <span class="o">=</span> <span class="nx">aws_instance</span><span class="p">.</span><span class="nx">web</span><span class="p">[*].</span><span class="nx">public_ip</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Deploy to dev:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform apply <span class="nt">-var</span><span class="o">=</span><span class="s2">"environment=dev"</span> <span class="nt">-var</span><span class="o">=</span><span class="s2">"instance_count=2"</span>
+</code></pre></div></div>
+
+<p>Deploy to prod:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform apply <span class="nt">-var</span><span class="o">=</span><span class="s2">"environment=prod"</span> <span class="nt">-var</span><span class="o">=</span><span class="s2">"instance_count=5"</span>
+</code></pre></div></div>
+
+<p>Same code, different parameters. Consistent, repeatable, auditable.</p>
+
+<h2 id="common-mistakes">Common Mistakes</h2>
+
+<p><strong>Mistake 1: Manually changing infrastructure</strong>
+Don’t. If you SSH and change something, Terraform gets confused. Make the change in code, apply it, then Terraform knows about it.</p>
+
+<p><strong>Mistake 2: Storing state locally</strong>
+Use remote backends (S3, Terraform Cloud, etc.). Local state breaks when you work with a team.</p>
+
+<p><strong>Mistake 3: Not locking state</strong>
+When two people apply changes simultaneously, state gets corrupted. Use state locking (S3 + DynamoDB, for example).</p>
+
+<p><strong>Mistake 4: Secrets in code</strong>
+Never. Use variable files that aren’t checked in, or use secret management tools.</p>
+
+<h2 id="the-workflow">The Workflow</h2>
+
+<ol>
+  <li><strong>Write</strong> infrastructure as code (<code class="language-plaintext highlighter-rouge">.tf</code> files)</li>
+  <li><strong>Plan</strong> changes (<code class="language-plaintext highlighter-rouge">terraform plan</code> shows what will happen)</li>
+  <li><strong>Review</strong> the plan (is this actually what I want?)</li>
+  <li><strong>Apply</strong> (<code class="language-plaintext highlighter-rouge">terraform apply</code> makes it real)</li>
+  <li><strong>Verify</strong> (manually check everything works)</li>
+  <li><strong>Document</strong> why this infrastructure exists (comments matter)</li>
+  <li><strong>Version</strong> (commit to git with meaningful messages)</li>
+</ol>
+
+<h2 id="why-this-matters-for-your-career">Why This Matters for Your Career</h2>
+
+<p>When you understand IaC:</p>
+<ul>
+  <li>You can move between cloud providers (AWS, GCP, Azure—Terraform does them all)</li>
+  <li>You can build infrastructure faster</li>
+  <li>You can collaborate with teams (pull requests &gt; manual communication)</li>
+  <li>You prevent “works on my machine” problems at the infrastructure level</li>
+</ul>
+
+<h2 id="whats-next">What’s Next?</h2>
+
+<p>Learn these in order:</p>
+
+<ol>
+  <li><strong>Terraform basics:</strong> Resources, variables, outputs</li>
+  <li><strong>State management:</strong> Remote state, locking</li>
+  <li><strong>Modules:</strong> Write reusable infrastructure</li>
+  <li><strong>Best practices:</strong> Workspace separation, testing (terratest), policy enforcement</li>
+  <li><strong>Advanced:</strong> Custom providers, module registries</li>
+</ol>
+
+<hr />
+
+<p><em>I’m publishing complete Terraform examples on GitHub. Start there, tweak them, break them, fix them. That’s how you learn.</em></p>
 
   
 </article>
@@ -284,7 +431,7 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/kubernetes/devops/2025/12/20/kubernetes-fundamentals-simplified.html" class="flip-title"><span>Kubernetes Fundamentals Simplified</span></a>  <time class="faded fine" datetime="2025-12-20T00:00:00+01:00">20 Dec 2025</time></li>                        <li class="h4">  <a href="/devops/ci-cd/2025/12/15/ci-cd-pipeline-from-scratch.html" class="flip-title"><span>Building a CI/CD Pipeline From Scratch</span></a>  <time class="faded fine" datetime="2025-12-15T00:00:00+01:00">15 Dec 2025</time></li>                        <li class="h4">  <a href="/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html" class="flip-title"><span>Infrastructure as Code With Terraform</span></a>  <time class="faded fine" datetime="2025-12-10T00:00:00+01:00">10 Dec 2025</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/2025/12/27/welcome.html" class="flip-title"><span>Welcome to DevOps Blog</span></a>  <time class="faded fine" datetime="2025-12-27T00:00:00+01:00">27 Dec 2025</time></li>                        <li class="h4">  <a href="/kubernetes/devops/2025/12/20/kubernetes-fundamentals-simplified.html" class="flip-title"><span>Kubernetes Fundamentals Simplified</span></a>  <time class="faded fine" datetime="2025-12-20T00:00:00+01:00">20 Dec 2025</time></li>                        <li class="h4">  <a href="/devops/ci-cd/2025/12/15/ci-cd-pipeline-from-scratch.html" class="flip-title"><span>Building a CI/CD Pipeline From Scratch</span></a>  <time class="faded fine" datetime="2025-12-15T00:00:00+01:00">15 Dec 2025</time></li>            </ul></aside>
 
   
 

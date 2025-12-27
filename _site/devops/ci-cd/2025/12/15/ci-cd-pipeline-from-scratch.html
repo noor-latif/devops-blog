@@ -30,10 +30,10 @@ Powered by Hydejack v9.2.1 <https://hydejack.com/>
   
     
 
-<title>Noor Latif | DevOps Engineer | Learning DevOps in Public</title>
-<meta name="description" content="A DevOps professional documenting my journey to master Kubernetes and cloud-native technologies, sharing practical insights for beginners and advanced learners alike.
+<title>Building a CI/CD Pipeline From Scratch | Noor Latif | DevOps Engineer</title>
+<meta name="description" content="Every time someone asks me “how do I set up CI/CD?”, I realize there’s a gap between theory and practice. Theory talks about “continuous integration” and “deployment pipelines.” Practice is… messy.
 ">
-<link rel="canonical" href="http://localhost:4000/">
+<link rel="canonical" href="http://localhost:4000/devops/ci-cd/2025/12/15/ci-cd-pipeline-from-scratch.html">
 
   
 
@@ -63,7 +63,7 @@ Powered by Hydejack v9.2.1 <https://hydejack.com/>
 <meta name="generator" content="Hydejack v9.2.1" />
 
 
-<link rel="alternate" href="http://localhost:4000/" hreflang="en">
+<link rel="alternate" href="http://localhost:4000/devops/ci-cd/2025/12/15/ci-cd-pipeline-from-scratch.html" hreflang="en">
 
 
 
@@ -168,18 +168,100 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
 
   <main
   id="_main"
-  class="content layout-home"
+  class="content layout-post"
   role="main"
 >
   <nav id="breadcrumbs" class="screen-only"><ul>
   
   
+    <li><a href="/">home</a></li>
+    
+      <li>
+        
+          <span>/</span>
+          
+          
+          <a href="/devops/">devops</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          
+          
+          <a href="/devops/ci-cd/">ci-cd</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          
+          
+          <a href="/devops/ci-cd/2025/">2025</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          
+          
+          <a href="/devops/ci-cd/2025/12/">12</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          
+          
+          <a href="/devops/ci-cd/2025/12/15/">15</a>
+        
+      </li>
+    
+      <li>
+        
+          <span>/</span>
+          <span>ci-cd-pipeline-from-scratch.html</span>
+        
+      </li>
+    
+  
 </ul></nav>
   
 
-<article class="page" role="article">
+
+
+
+
+
+
+
+
+
+<article id="post-devops-ci-cd-2025-12-15-ci-cd-pipeline-from-scratch" class="page post mb6" role="article">
   <header>
-    <h1 class="page-title">Home</h1>
+    <h1 class="post-title flip-project-title">
+      
+        Building a CI/CD Pipeline From Scratch
+      
+    </h1>
+
+    <div class="post-date">
+      
+      <span class="ellipsis mr1">
+        <time datetime="2025-12-15T00:00:00+01:00">15 Dec 2025</time> in <span>Devops</span> / <span>Ci-cd</span> on <span>Automation</span>, <span>Jenkins</span>, <span>Best-practices</span>
+      </span>
+      
+        
+      
+    </div>
+
+    
+    
+
     
 
 
@@ -189,153 +271,153 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
 
   </header>
 
-  <h1 id="learning-devops-in-public">Learning DevOps in Public</h1>
+  
+    <p>Every time someone asks me “how do I set up CI/CD?”, I realize there’s a gap between theory and practice. Theory talks about “continuous integration” and “deployment pipelines.” Practice is… messy.</p>
 
-<p>I’m Noor Latif, a DevOps professional on a mission to master Kubernetes and cloud-native technologies while helping others do the same. This is my learning journey—documented, shared, and real.</p>
+<p>This post documents building a real pipeline that actually works—from code commit to production.</p>
 
-<h2 id="what-youll-find-here">What You’ll Find Here</h2>
+<h2 id="what-are-we-building">What Are We Building?</h2>
 
-<p><strong>For Beginners:</strong> Clear, accessible explanations of DevOps concepts that make complex ideas feel simple. No gatekeeping, no pretense—just practical knowledge broken down so you actually understand it.</p>
-
-<p><strong>For Advanced Learners:</strong> Deep dives into production patterns, Kubernetes architectures, and lessons learned from real-world DevOps challenges. Technical depth delivered conversationally.</p>
-
-<p><strong>For Recruiters:</strong> A portfolio of my growth, projects, and certifications. See how I approach problems, communicate technical concepts, and contribute to the DevOps community.</p>
-
-<h2 id="my-approach">My Approach</h2>
-
-<p>I follow Kelsey Hightower’s philosophy: <strong>technical depth delivered with clarity and practicality</strong>. Like Mischa van den Burg, I learn in public—sharing what works, what breaks, and everything in between. No fluff. Just the signal, not the noise.</p>
-
-<p>Every post is either:</p>
+<p>A pipeline that:</p>
 <ul>
-  <li>A concept I’ve just understood and want to explain clearly</li>
-  <li>A problem I’ve solved and documented for the next person who hits it</li>
-  <li>A lesson learned from production incidents and real-world constraints</li>
-  <li>A tool, pattern, or practice that actually delivers value</li>
+  <li>Runs tests automatically when code is pushed</li>
+  <li>Builds a Docker image if tests pass</li>
+  <li>Scans it for vulnerabilities</li>
+  <li>Deploys it to Kubernetes if everything is clean</li>
+  <li>Alerts us if anything breaks</li>
 </ul>
+
+<h2 id="the-philosophy-first">The Philosophy First</h2>
+
+<p>Before tools, understand the principles:</p>
+
+<p><strong>1. Automation Beats Humans</strong>
+If you’re doing it manually, it will fail. Automate first, perfect later.</p>
+
+<p><strong>2. Fast Feedback</strong>
+Your developers should know if their code is broken <em>in seconds</em>, not hours.</p>
+
+<p><strong>3. Security Isn’t Separate</strong>
+It’s not a step at the end. It’s woven in: scan code, scan images, enforce policies.</p>
+
+<p><strong>4. Simple &gt; Clever</strong>
+Everyone on your team should understand the pipeline. If you need a flowchart to explain it, simplify.</p>
+
+<h2 id="the-minimal-viable-pipeline">The Minimal Viable Pipeline</h2>
+
+<p>Here’s the absolute minimum:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Test and Build</span>
+<span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">,</span> <span class="nv">pull_request</span><span class="pi">]</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">test</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Run tests</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">npm test</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build image</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="s">docker build -t myapp:$ .</span>
+</code></pre></div></div>
+
+<p>That’s it. Code comes in, tests run, image is built. Takes 5 minutes to set up. Solves 80% of the problem.</p>
+
+<h2 id="growing-from-there">Growing From There</h2>
+
+<p>Once this works, add:</p>
+
+<p><strong>1. Container Scanning</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trivy image myapp:latest
+</code></pre></div></div>
+
+<p><strong>2. Deploy to Dev</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> k8s/dev/ <span class="nt">--image</span><span class="o">=</span>myapp:sha
+</code></pre></div></div>
+
+<p><strong>3. Run Integration Tests</strong>
+Test against the real deployment, not just unit tests.</p>
+
+<p><strong>4. Production Deployment</strong>
+Only if everything above passed.</p>
+
+<h2 id="real-problems-youll-hit">Real Problems You’ll Hit</h2>
+
+<p><strong>Problem 1: Pipeline takes 30 minutes</strong>
+<em>Solution:</em> Run tests in parallel. Cache dependencies. Build images once, not twice.</p>
+
+<p><strong>Problem 2: Tests pass locally, fail in CI</strong>
+<em>Solution:</em> CI environment should match dev. Docker helps with this—same image everywhere.</p>
+
+<p><strong>Problem 3: Deployments fail, but pipeline says “success”</strong>
+<em>Solution:</em> Add health checks. Don’t just deploy—verify it’s actually running.</p>
+
+<p><strong>Problem 4: Everyone’s afraid to deploy</strong>
+<em>Solution:</em> If your pipeline is trustworthy, fear goes away. Automate thoroughly, then deploy frequently.</p>
+
+<h2 id="the-checklist">The Checklist</h2>
+
+<p>Before calling your pipeline “done”:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Tests run automatically on every commit</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Code is scanned for security issues</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Container images are built reproducibly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Images are scanned before deployment</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Deployment is automated, not manual</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Failed deployments are caught and alerted</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Rollbacks are automated and fast</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />The whole pipeline is version-controlled</li>
+</ul>
+
+<h2 id="what-changed-my-approach">What Changed My Approach</h2>
+
+<p>I used to treat CI/CD as a “nice to have.” Then I spent a week fixing production bugs manually while deployments were broken. Now it’s first, not last.</p>
+
+<p>Pipeline &gt; Code &gt; Everything Else.</p>
 
 <hr />
 
-<h2 id="latest-posts">Latest Posts</h2>
+<p><em>In my next post, I’ll walk through setting up Jenkins in Kubernetes with dynamic agents. Real code, real configs.</em></p>
 
-<div class="post-preview">
-  <h3 id="welcome-to-devops-blog"><a href="/2025/12/27/welcome.html">Welcome to DevOps Blog</a></h3>
-  <p><em>December 27, 2025</em></p>
-
-  <p>Welcome to the DevOps Blog! This is your first post.</p>
-
-  <p><a href="/2025/12/27/welcome.html">Read more →</a></p>
-</div>
-
-<div class="post-preview">
-  <h3 id="kubernetes-fundamentals-simplified"><a href="/kubernetes/devops/2025/12/20/kubernetes-fundamentals-simplified.html">Kubernetes Fundamentals Simplified</a></h3>
-  <p><em>December 20, 2025</em></p>
-
-  <p>Kubernetes is often presented as this complex, overwhelming system. But strip away the jargon, and it’s solving a simple problem: <strong>how do we run lots of containers reliably?</strong></p>
-
-  <p><a href="/kubernetes/devops/2025/12/20/kubernetes-fundamentals-simplified.html">Read more →</a></p>
-</div>
-
-<div class="post-preview">
-  <h3 id="building-a-cicd-pipeline-from-scratch"><a href="/devops/ci-cd/2025/12/15/ci-cd-pipeline-from-scratch.html">Building a CI/CD Pipeline From Scratch</a></h3>
-  <p><em>December 15, 2025</em></p>
-
-  <p>Every time someone asks me “how do I set up CI/CD?”, I realize there’s a gap between theory and practice. Theory talks about “continuous integration” and “deployment pipelines.” Practice is… messy.</p>
-
-  <p><a href="/devops/ci-cd/2025/12/15/ci-cd-pipeline-from-scratch.html">Read more →</a></p>
-</div>
-
-<div class="post-preview">
-  <h3 id="infrastructure-as-code-with-terraform"><a href="/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html">Infrastructure as Code With Terraform</a></h3>
-  <p><em>December 10, 2025</em></p>
-
-  <p>Infrastructure as Code is the difference between “I built a thing” and “I can reliably rebuild that thing 100 times.”</p>
-
-  <p><a href="/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html">Read more →</a></p>
-</div>
-
-<hr />
-
-<h2 id="lets-connect">Let’s Connect</h2>
-
-<ul>
-  <li><strong>GitHub:</strong> <a href="https://github.com/noor-latif">@noor-latif</a></li>
-  <li><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/noor-latif">linkedin.com/in/noor-latif</a></li>
-  <li><strong>Email:</strong> <a href="mailto:hello@noor-latif.com">hello@noor-latif.com</a></li>
-</ul>
-
-<p>Whether you’re recruiting, learning DevOps, or just exploring what’s possible with Kubernetes—let’s talk.</p>
-
-
-
-  <hr class="dingbat related"/>
-
-  
-    <h2 class="hr-bottom">Posts</h2>
-    <ul class="related-posts">
-      
-        
-
-
-<li class="h4">
-  <a href="/2025/12/27/welcome.html" class="flip-title"><span>Welcome to DevOps Blog</span></a>
-  <time class="faded fine" datetime="2025-12-27T00:00:00+01:00">27 Dec 2025</time>
-</li>
-
-      
-        
-
-
-<li class="h4">
-  <a href="/kubernetes/devops/2025/12/20/kubernetes-fundamentals-simplified.html" class="flip-title"><span>Kubernetes Fundamentals Simplified</span></a>
-  <time class="faded fine" datetime="2025-12-20T00:00:00+01:00">20 Dec 2025</time>
-</li>
-
-      
-        
-
-
-<li class="h4">
-  <a href="/devops/ci-cd/2025/12/15/ci-cd-pipeline-from-scratch.html" class="flip-title"><span>Building a CI/CD Pipeline From Scratch</span></a>
-  <time class="faded fine" datetime="2025-12-15T00:00:00+01:00">15 Dec 2025</time>
-</li>
-
-      
-        
-
-
-<li class="h4">
-  <a href="/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html" class="flip-title"><span>Infrastructure as Code With Terraform</span></a>
-  <time class="faded fine" datetime="2025-12-10T00:00:00+01:00">10 Dec 2025</time>
-</li>
-
-      
-    </ul>
-  
-
-  
-  
-    <h2 class="hr-bottom">Pages</h2>
-    <ul class="related-posts">
-      
-        
-          <li class="h4">
-            <a href="/about.html" class="flip-title">
-              <span>About</span>
-            </a>
-          </li>
-        
-      
-        
-          <li class="h4">
-            <a href="/projects.html" class="flip-title">
-              <span>Projects</span>
-            </a>
-          </li>
-        
-      
-    </ul>
   
 </article>
+
+
+
+  <hr class="dingbat related mb6" />
+
+
+
+
+
+
+  
+     
+
+
+
+  
+
+  
+  
+
+  
+    
+
+
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/2025/12/27/welcome.html" class="flip-title"><span>Welcome to DevOps Blog</span></a>  <time class="faded fine" datetime="2025-12-27T00:00:00+01:00">27 Dec 2025</time></li>                        <li class="h4">  <a href="/kubernetes/devops/2025/12/20/kubernetes-fundamentals-simplified.html" class="flip-title"><span>Kubernetes Fundamentals Simplified</span></a>  <time class="faded fine" datetime="2025-12-20T00:00:00+01:00">20 Dec 2025</time></li>                        <li class="h4">  <a href="/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html" class="flip-title"><span>Infrastructure as Code With Terraform</span></a>  <time class="faded fine" datetime="2025-12-10T00:00:00+01:00">10 Dec 2025</time></li>            </ul></aside>
+
+  
+
+  
+  
+
+  
+    
+
+  
+
 
   
 <footer class="content" role="contentinfo">

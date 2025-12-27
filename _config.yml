@@ -1,15 +1,32 @@
 lang:                  en
-title:                 Hydejack
-copyright:             © 2024. All rights reserved.
+title:                 Noor Latif | DevOps Engineer
+tagline:               Learning DevOps in Public
+description:           A DevOps professional documenting my journey to master Kubernetes and cloud-native technologies, sharing practical insights for beginners and advanced learners alike.
+copyright:             © 2025 Noor Latif. All rights reserved.
 
 theme: jekyll-theme-hydejack
 
 plugins:
   - jekyll-include-cache
 
+livereload:              false
+
+# Branding
 accent_image:          /assets/img/sidebar-bg.jpg
-accent_color:          rgb(79,177,186)
-theme_color:           rgb(25,55,71)
+accent_color:          '#58a6ff'
+theme_color:           '#0d1117'
+
+# Author & Social
+author:
+  name:                Noor Latif
+  email:               hello@noor-latif.com
+  social:
+    github:            noor-latif
+    linkedin:          noor-latif
+    twitter:           noor_latif
+
+url:                   https://noor-latif.com
+baseurl:               ''
 
 google_fonts:          false
 

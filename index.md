@@ -1,6 +1,8 @@
 ---
 layout: home
 title: Home
+menu: true
+order: 1
 ---
 
 # Learning DevOps in Public
