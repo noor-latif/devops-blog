@@ -25,12 +25,25 @@ Once the PR containing the GitHub Actions workflow is merged to the `main` branc
 
 After the deployment completes (usually takes 2-3 minutes), your blog will be available at:
 
-**https://noor-latif.github.io/devops-blog/**
+**https://noor-latif.github.io/devops-blog/** (or your custom domain if configured)
 
-If you have a custom domain (`noor-latif.com`), you can configure it in the GitHub Pages settings:
-1. Go to **Settings** > **Pages**
-2. Under **Custom domain**, enter your domain
-3. Follow the DNS configuration instructions provided by GitHub
+### Custom Domain Configuration
+
+This repository includes a `CNAME` file configured for `noor-latif.com`. To use this custom domain:
+
+1. **Configure DNS**: Set up your domain's DNS records:
+   - For apex domain (`noor-latif.com`), add A records pointing to GitHub's IP addresses:
+     - `185.199.108.153`
+     - `185.199.109.153`
+     - `185.199.110.153`
+     - `185.199.111.153`
+   - For www subdomain, add a CNAME record pointing to `noor-latif.github.io`
+
+2. **Enable in GitHub**: Go to **Settings** > **Pages**:
+   - The custom domain should be automatically detected from the CNAME file
+   - Check "Enforce HTTPS" after DNS propagates (may take 24-48 hours)
+
+3. **If not using custom domain**: Delete the `CNAME` file and your site will be available at `https://noor-latif.github.io/devops-blog/`
 
 ## Automatic Deployments
 
