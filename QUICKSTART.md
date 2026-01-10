@@ -5,7 +5,7 @@
 Your DevOps blog is now configured with automatic GitHub Pages deployment! Here's what was set up:
 
 ✅ GitHub Actions workflow for automatic deployment  
-✅ CNAME file for custom domain support (`noor-latif.com`)  
+✅ CNAME file for custom domain support (`latif.se`)  
 ✅ Complete documentation in `DEPLOYMENT.md`  
 ✅ Updated README with deployment info  
 
@@ -35,7 +35,7 @@ https://noor-latif.github.io/devops-blog/
 
 **Option B: Custom Domain (requires DNS setup)**
 ```
-https://noor-latif.com
+https://latif.se
 ```
 
 To use your custom domain:

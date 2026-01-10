@@ -29,10 +29,10 @@ After the deployment completes (usually takes 2-3 minutes), your blog will be av
 
 ### Custom Domain Configuration
 
-This repository includes a `CNAME` file configured for `noor-latif.com`. To use this custom domain:
+This repository includes a `CNAME` file configured for `latif.se`. To use this custom domain:
 
 1. **Configure DNS**: Set up your domain's DNS records:
-   - For apex domain (`noor-latif.com`), add A records pointing to GitHub's IP addresses:
+   - For apex domain (`latif.se`), add A records pointing to GitHub's IP addresses:
      - `185.199.108.153`
      - `185.199.109.153`
      - `185.199.110.153`
@@ -100,7 +100,7 @@ open http://localhost:4000
 ## Configuration
 
 The blog is configured in `_config.yml`:
-- Current URL: `https://noor-latif.com`
+- Current URL: `https://latif.se`
 - Baseurl: (empty, root of the domain)
 
 If deploying to `username.github.io/repository-name`, you may need to update:
