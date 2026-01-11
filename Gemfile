@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "github-pages"
 gem "jekyll-theme-hydejack", "~> 9.2"
+gem "webrick"
 
 group :jekyll_plugins do
   gem "jekyll-include-cache"
