@@ -1,7 +1,8 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.2"
+gem "github-pages"
 gem "jekyll-theme-hydejack", "~> 9.2"
+gem "webrick"
 
 group :jekyll_plugins do
   gem "jekyll-include-cache"
