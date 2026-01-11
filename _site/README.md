@@ -25,6 +25,16 @@ A boutique Jekyll theme for hackers, nerds, and academics.
 
 Write all content in Markdown. See [Hydejack documentation](https://hydejack.com/docs/) for details on styling and advanced features.
 
+## Deployment
+
+This blog is configured to automatically deploy to GitHub Pages using GitHub Actions. 
+
+**See [DEPLOYMENT.md](DEPLOYMENT.md) for complete setup instructions.**
+
+Once configured, the blog will be available at: **https://noor-latif.github.io/devops-blog/**
+
+Every push to the `main` branch automatically triggers a new deployment.
+
 ## License
 
 GPL-3.0 (with exceptions for open source). See LICENSE.md for details.

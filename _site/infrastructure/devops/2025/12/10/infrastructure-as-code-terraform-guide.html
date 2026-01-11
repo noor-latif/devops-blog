@@ -32,8 +32,9 @@ Powered by Hydejack v9.2.1 <https://hydejack.com/>
 
 <title>Infrastructure as Code With Terraform | Noor Latif</title>
 <meta name="description" content="Infrastructure as Code is the difference between “I built a thing” and “I can reliably rebuild that thing 100 times.”
+
 ">
-<link rel="canonical" href="http://localhost:4000/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html">
+<link rel="canonical" href="https://latif.se/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html">
 
   
 
@@ -63,7 +64,7 @@ Powered by Hydejack v9.2.1 <https://hydejack.com/>
 <meta name="generator" content="Hydejack v9.2.1" />
 
 
-<link rel="alternate" href="http://localhost:4000/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html" hreflang="en">
+<link rel="alternate" href="https://latif.se/infrastructure/devops/2025/12/10/infrastructure-as-code-terraform-guide.html" hreflang="en">
 
 
 
@@ -97,11 +98,13 @@ Powered by Hydejack v9.2.1 <https://hydejack.com/>
   w._search = {
     DATA_URL: '/assets/sitedata.json?no-cache',
     STORAGE_KEY: 'mini-search/',
-    INDEX_KEY: 'index--2025-12-27T17:26:16+01:00',
+    INDEX_KEY: 'index--2026-01-11T09:59:27+00:00',
   };
   w._clapButton = true;
 }(window);</script>
 
+
+<script async src="/assets/bower_components/MathJax/es5/tex-mml-chtml.js" id="_MathJax"></script>
 
 
 <!--[if gt IE 8]><!---->
@@ -119,7 +122,8 @@ Powered by Hydejack v9.2.1 <https://hydejack.com/>
 
   <style id="_pageStyle">
 
-html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--accent-color-highlight: rgba(88, 166, 255, 0.1);--accent-color-darkened: rgb(49.75, 145.6152694611, 255);--theme-color: #0d1117;--dark-mode-body-bg: hsl(216, 3.4722222222%, 17.5%);--dark-mode-border-color: hsl(216, 3.4722222222%, 22.5%)}
+html{--accent-color: #58a6ff;--accent-color-faded: rgba(88,166,255,0.5);--accent-color-highlight: rgba(88,166,255,0.1);--accent-color-darkened: #3292ff;--theme-color: #0d1117;--dark-mode-body-bg: #2b2c2e;--dark-mode-border-color: #37393b}
+
 </style>
 
 
@@ -252,7 +256,7 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
     <div class="post-date">
       
       <span class="ellipsis mr1">
-        <time datetime="2025-12-10T00:00:00+01:00">10 Dec 2025</time> in <span>Infrastructure</span> / <span>Devops</span> on <span>Terraform</span>, <span>Iac</span>, <span>Automation</span>
+        <time datetime="2025-12-10T00:00:00+00:00">10 Dec 2025</time> in <span>Infrastructure</span> / <span>Devops</span> on <span>Terraform</span>, <span>Iac</span>, <span>Automation</span>
       </span>
       
         
@@ -283,17 +287,17 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
 <h2 id="the-new-way-infrastructure-as-code">The New Way (Infrastructure as Code)</h2>
 
 <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"aws_vpc"</span> <span class="s2">"main"</span> <span class="p">{</span>
-  <span class="nx">cidr_block</span> <span class="o">=</span> <span class="s2">"10.0.0.0/16"</span>
+  <span class="nx">cidr_block</span> <span class="p">=</span> <span class="s2">"10.0.0.0/16"</span>
   
-  <span class="nx">tags</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">Name</span> <span class="o">=</span> <span class="s2">"main-vpc"</span>
+  <span class="nx">tags</span> <span class="p">=</span> <span class="p">{</span>
+    <span class="nx">Name</span> <span class="p">=</span> <span class="s2">"main-vpc"</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="nx">resource</span> <span class="s2">"aws_subnet"</span> <span class="s2">"private"</span> <span class="p">{</span>
-  <span class="nx">vpc_id</span>            <span class="o">=</span> <span class="nx">aws_vpc</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nx">id</span>
-  <span class="nx">cidr_block</span>        <span class="o">=</span> <span class="s2">"10.0.1.0/24"</span>
-  <span class="nx">availability_zone</span> <span class="o">=</span> <span class="s2">"us-east-1a"</span>
+  <span class="nx">vpc_id</span>            <span class="p">=</span> <span class="nx">aws_vpc</span><span class="err">.</span><span class="nx">main</span><span class="err">.</span><span class="nx">id</span>
+  <span class="nx">cidr_block</span>        <span class="p">=</span> <span class="s2">"10.0.1.0/24"</span>
+  <span class="nx">availability_zone</span> <span class="p">=</span> <span class="s2">"us-east-1a"</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -320,26 +324,26 @@ html{--accent-color: #58a6ff;--accent-color-faded: rgba(88, 166, 255, 0.5);--acc
 <h2 id="a-real-example">A Real Example</h2>
 
 <div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span> <span class="s2">"environment"</span> <span class="p">{</span>
-  <span class="nx">type</span> <span class="o">=</span> <span class="nx">string</span>
+  <span class="nx">type</span> <span class="p">=</span> <span class="nx">string</span>
 <span class="p">}</span>
 
 <span class="nx">variable</span> <span class="s2">"instance_count"</span> <span class="p">{</span>
-  <span class="nx">type</span> <span class="o">=</span> <span class="nx">number</span>
-  <span class="nx">default</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="nx">type</span> <span class="p">=</span> <span class="nx">number</span>
+  <span class="nx">default</span> <span class="p">=</span> <span class="mi">2</span>
 <span class="p">}</span>
 
 <span class="nx">resource</span> <span class="s2">"aws_instance"</span> <span class="s2">"web"</span> <span class="p">{</span>
-  <span class="nx">count</span>         <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">instance_count</span>
-  <span class="nx">ami</span>           <span class="o">=</span> <span class="s2">"ami-0c55b159cbfafe1f0"</span>
-  <span class="nx">instance_type</span> <span class="o">=</span> <span class="s2">"t2.micro"</span>
+  <span class="nx">count</span>         <span class="p">=</span> <span class="nx">var</span><span class="err">.</span><span class="nx">instance_count</span>
+  <span class="nx">ami</span>           <span class="p">=</span> <span class="s2">"ami-0c55b159cbfafe1f0"</span>
+  <span class="nx">instance_type</span> <span class="p">=</span> <span class="s2">"t2.micro"</span>
   
-  <span class="nx">tags</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">Name</span> <span class="o">=</span> <span class="s2">"${var.environment}-web-${count.index}"</span>
+  <span class="nx">tags</span> <span class="p">=</span> <span class="p">{</span>
+    <span class="nx">Name</span> <span class="p">=</span> <span class="s2">"${var.environment}-web-${count.index}"</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="nx">output</span> <span class="s2">"instance_ips"</span> <span class="p">{</span>
-  <span class="nx">value</span> <span class="o">=</span> <span class="nx">aws_instance</span><span class="p">.</span><span class="nx">web</span><span class="p">[*].</span><span class="nx">public_ip</span>
+  <span class="nx">value</span> <span class="p">=</span> <span class="nx">aws_instance</span><span class="err">.</span><span class="nx">web</span><span class="p">[</span><span class="err">*</span><span class="p">]</span><span class="err">.</span><span class="nx">public_ip</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -431,7 +435,7 @@ Never. Use variable files that aren’t checked in, or use secret management too
     
 
 
-  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/2025/12/27/welcome.html" class="flip-title"><span>Welcome to DevOps Blog</span></a>  <time class="faded fine" datetime="2025-12-27T00:00:00+01:00">27 Dec 2025</time></li>                        <li class="h4">  <a href="/kubernetes/devops/2025/12/20/kubernetes-fundamentals-simplified.html" class="flip-title"><span>Kubernetes Fundamentals Simplified</span></a>  <time class="faded fine" datetime="2025-12-20T00:00:00+01:00">20 Dec 2025</time></li>                        <li class="h4">  <a href="/devops/ci-cd/2025/12/15/ci-cd-pipeline-from-scratch.html" class="flip-title"><span>Building a CI/CD Pipeline From Scratch</span></a>  <time class="faded fine" datetime="2025-12-15T00:00:00+01:00">15 Dec 2025</time></li>            </ul></aside>
+  <aside class="related mb4" role="complementary">  <h2 class="hr-bottom">Related Posts</h2>  <ul class="related-posts">                  <li class="h4">  <a href="/2025/12/27/welcome.html" class="flip-title"><span>Welcome to DevOps Blog</span></a>  <time class="faded fine" datetime="2025-12-27T00:00:00+00:00">27 Dec 2025</time></li>                        <li class="h4">  <a href="/kubernetes/devops/2025/12/20/kubernetes-fundamentals-simplified.html" class="flip-title"><span>Kubernetes Fundamentals Simplified</span></a>  <time class="faded fine" datetime="2025-12-20T00:00:00+00:00">20 Dec 2025</time></li>                        <li class="h4">  <a href="/devops/ci-cd/2025/12/15/ci-cd-pipeline-from-scratch.html" class="flip-title"><span>Building a CI/CD Pipeline From Scratch</span></a>  <time class="faded fine" datetime="2025-12-15T00:00:00+00:00">15 Dec 2025</time></li>            </ul></aside>
 
   
 
